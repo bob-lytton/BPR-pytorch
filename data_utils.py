@@ -77,11 +77,11 @@ class BPRData(data.Dataset):
 
     def ng_sample(self):
         assert self.is_training, 'no need to sampling when testing'
-
+        
         self.features_fill = []
         for x in self.features:
             u, i = x[0], x[1]
-            for t in range(self.num_ng):
+            for t in range(self.num_ng):    # generate `num_ng` neg samples for each pos sample
                 j = np.random.randint(self.num_item)
                 while (u, j) in self.train_mat:
                     j = np.random.randint(self.num_item)
