@@ -8,7 +8,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.utils.data as data
 import torch.backends.cudnn as cudnn
-from tensorboardX import SummaryWriter
+# from tensorboardX import SummaryWriter
 
 import model
 import config
@@ -47,7 +47,8 @@ parser.add_argument("--num_ng",
 	help="sample negative items for training")
 parser.add_argument("--test_num_ng", 
 	type=int,
-	default=99, 
+	# default=99, 
+	default=50,		# the new dataset
 	help="sample part of negative items for testing")
 parser.add_argument("--out", 
 	default=True,
