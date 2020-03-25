@@ -25,8 +25,7 @@ def metrics(model, test_loader, top_k):
 
 		prediction_i, prediction_j = model(user, item_i, item_j)
 		_, indices = torch.topk(prediction_i, top_k)
-		recommends = torch.take(
-				item_i, indices).cpu().numpy().tolist()
+		recommends = torch.take(item_i, indices).cpu().numpy().tolist()
 
 		gt_item = item_i[0].item()
 		HR.append(hit(gt_item, recommends))

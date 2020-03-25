@@ -80,7 +80,9 @@ test_loader = data.DataLoader(test_dataset,
 model = model.BPR(user_num, item_num, args.factor_num)
 model.cuda()
 
-optimizer = optim.SGD(
+# optimizer = optim.SGD(
+# 			model.parameters(), lr=args.lr, weight_decay=args.lamda)
+optimizer = optim.Adam(
 			model.parameters(), lr=args.lr, weight_decay=args.lamda)
 # writer = SummaryWriter() # for visualization
 
