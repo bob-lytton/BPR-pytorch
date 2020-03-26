@@ -64,11 +64,11 @@ cudnn.benchmark = True
 
 
 ############################## PREPARE DATASET ##########################
-train_data, test_data, user_num, item_num = data_utils.load_all()
+train_data, test_data, train_mat, user_num, item_num = data_utils.load_all()
 
 # construct the train and test datasets
 train_dataset = data_utils.BPRData(
-		train_data, user_num, item_num, num_ng=args.num_ng, is_training=True)
+		train_data, user_num, item_num, train_mat, num_ng=args.num_ng, is_training=True)
 test_dataset = data_utils.BPRData(
 		test_data, user_num, item_num, num_ng=0, is_training=False)
 train_loader = data.DataLoader(train_dataset,

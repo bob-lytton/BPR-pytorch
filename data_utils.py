@@ -37,12 +37,12 @@ def load_all():
 
     gt_items = {entry['user_id']:entry['pos_business_id'] for entry in test_data}
 
-    return train_data, test_data, user_num, item_num
+    return train_data, test_data, train_mat, user_num, item_num
 
 
 class BPRData(data.Dataset):
     def __init__(self, features, num_user,
-                num_item, num_ng=0, is_training=None):
+                num_item, train_mat=None, num_ng=0, is_training=None):
         super(BPRData, self).__init__()
         """ Note that the labels are only useful when training, we thus 
             add them in the ng_sample() function.
@@ -52,15 +52,16 @@ class BPRData(data.Dataset):
         self.features = features
         self.num_user = num_user
         self.num_item = num_item
+        self.train_mat = train_mat
         self.num_ng = num_ng
         self.is_training = is_training
-        self.user_neg_dict = {u:set(range(num_item)) for u in range(num_user)}
-        user_pos_dict = {u:set() for u in range(num_user)}
-        if self.is_training:
-            for x in features:
-                user_pos_dict[x[0]].add(x[1])
-            for u in user_pos_dict.keys():
-                self.user_neg_dict[u] = list(self.user_neg_dict[u] - user_pos_dict[u])
+        # self.user_neg_dict = {u:set(range(num_item)) for u in range(num_user)}
+        # user_pos_dict = {u:set() for u in range(num_user)}
+        # if self.is_training:
+        #     for x in features:
+        #         user_pos_dict[x[0]].add(x[1])
+        #     for u in user_pos_dict.keys():
+        #         self.user_neg_dict[u] = list(self.user_neg_dict[u] - user_pos_dict[u])
 
         if not self.is_training:
             self.data = []
@@ -78,10 +79,10 @@ class BPRData(data.Dataset):
         self.features_fill = []
         for x in self.features:
             u, i = x[0], x[1]
-            np.random.shuffle(self.user_neg_dict[u])
-            js = self.user_neg_dict[u][0:self.num_ng]
-
-            for j in js:
+            for t in range(self.num_ng):
+                j = np.random.randint(self.num_item)
+                while (u, j) in self.train_mat:
+                    j = np.random.randint(self.num_item)
                 self.features_fill.append([u, i, j])
 
     def __len__(self):
