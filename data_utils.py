@@ -89,7 +89,8 @@ class BPRData(data.Dataset):
                 self.features_fill.append([u, i, i])
 
     def __len__(self):
-        return self.num_ng * len(self.features) if \
+        num_samples = self.num_ng if self.num_ng > 0 else 1
+        return num_samples * len(self.features) if \
                 self.is_training else len(self.features)
 
     def __getitem__(self, idx):
