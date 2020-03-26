@@ -79,11 +79,14 @@ class BPRData(data.Dataset):
         self.features_fill = []
         for x in self.features:
             u, i = x[0], x[1]
-            for t in range(self.num_ng):
-                j = np.random.randint(self.num_item)
-                while (u, j) in self.train_mat:
+            if self.num_ng > 0:
+                for t in range(self.num_ng):
                     j = np.random.randint(self.num_item)
-                self.features_fill.append([u, i, j])
+                    while (u, j) in self.train_mat:
+                        j = np.random.randint(self.num_item)
+                    self.features_fill.append([u, i, j])
+            elif self.num_ng == 0:
+                self.features_fill.append([u, i, i])
 
     def __len__(self):
         return self.num_ng * len(self.features) if \
