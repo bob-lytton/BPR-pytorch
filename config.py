@@ -2,17 +2,16 @@
 dataset = 'yelp_dataset'
 
 # paths
-# main_path = '/home/share/guoyangyang/recommendation/NCF-Data/'
-main_path = 'data/'
+main_path = os.path.realpath('~/datasets/yelp_dataset/rates')
 
 # train_rating = main_path + '{}.train.rating'.format(dataset)
 # test_rating = main_path + '{}.test.rating'.format(dataset)
 # test_negative = main_path + '{}.test.negative'.format(dataset)
-train_data = main_path + 'train_data.pickle'
-test_data = main_path + 'test_data.pickle'
-test_negative = main_path + 'test_with_neg_sample.pickle'
-user_data = main_path + 'users-small.pickle'
-item_data = main_path + 'businesses-small.pickle'
+train_data = os.path.join(main_path, 'rate_train')
+test_data = os.path.join(main_path, 'rate_test')
+test_negative = os.path.join(main_path + 'test_with_neg')
+user_data = os.path.join(main_path + 'num_to_userid')
+item_data = os.path.join(main_path + 'num_to_businessid')
 
 model_path = './models/'
 # BPR_model_path = model_path + 'NeuMF.pth'
