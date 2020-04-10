@@ -1,3 +1,5 @@
+import os
+
 # dataset name 
 dataset = 'yelp_dataset'
 
